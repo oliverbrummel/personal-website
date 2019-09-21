@@ -1,1 +1,27 @@
 /* You can add global styles to this file, and also import other style files */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Mobile styles */
+@media only screen and (max-width: 400px) {
+  body {
+    background-color: #F09A9D;
+  }
+}
+
+/* Tablet styles */
+@media only screen and (min-width: 401px) and (max-width: 960px) {
+  body {
+    background-color: #F5CF8E;
+  }
+}
+
+/* Desktop styles */
+@media only screen and (min-width: 961px) {
+  body {
+    background-color: #B2D6FF;
+  }
+}
