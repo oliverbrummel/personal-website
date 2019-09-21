@@ -6,10 +6,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./terminal.component.scss']
 })
 export class TerminalComponent implements OnInit {
+  currentDateTime: Date;
 
   constructor() { }
 
   ngOnInit() {
+    this.currentDateTime = new Date();
   }
 
 }

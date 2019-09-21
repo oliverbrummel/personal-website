@@ -1,4 +1,7 @@
 <section class="terminal__container">
-  <p>Last Login</p>
-  <p>Welcome to the my terminal.</p>
+  <p>
+    <span>Last login: </span>
+    <span>{{ currentDateTime | date: 'medium' }}</span>
+  </p>
+  <p>Welcome to the best terminal ever.</p>
 </section>
