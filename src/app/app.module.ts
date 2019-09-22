@@ -6,12 +6,14 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { TerminalComponent } from './terminal/terminal.component';
 import { ForcedFocusDirective } from './terminal/forced-focus.directive';
+import { SafePipe } from './safe.pipe';
 
 @NgModule({
   declarations: [
     AppComponent,
     TerminalComponent,
-    ForcedFocusDirective
+    ForcedFocusDirective,
+    SafePipe
   ],
   imports: [
     BrowserModule,

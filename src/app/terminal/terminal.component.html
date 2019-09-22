@@ -5,7 +5,7 @@
   </p>
   <p *ngIf="pretendLoaded">
     <span>oliverbrummel-website:~$&nbsp;</span>
-    <span [innerHTML]="displayedOutput"></span>
+    <span [innerHTML]="displayedOutput | safe: 'html'"></span>
   </p>
 
   <div id="hiddenInputWrapper">

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, HostListener } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
@@ -16,6 +16,11 @@ export class TerminalComponent implements OnInit {
 
   constructor() { }
 
+  @HostListener('window:keydown', ['$event'])
+  onKeypress(event: any) {
+    console.log('Keydown event', event);
+  }
+
   ngOnInit() {
     this.terminalForm = new FormGroup({
       userInput: new FormControl('')
@@ -30,17 +35,20 @@ export class TerminalComponent implements OnInit {
   subscribeToInputChanges() {
     this.terminalForm.controls.userInput.valueChanges.subscribe(newValue => {
       this.displayedOutput = '';
+      let id = 1;
       const charArray = newValue.split('');
       charArray.forEach(char => {
         const charHTML = char === ' ' ? '&nbsp;' : char;
-        this.displayedOutput += `<span>${charHTML}</span>`;
+        this.displayedOutput += `<span id="${id}">${charHTML}</span>`;
+        id++;
       });
       this.displayedOutput += '<span class="char-span">&nbsp;</span>';
     });
   }
 
   processInput() {
-    console.log('SUBMITTED!!');
+    // test functionality
+    document.getElementById(String(4)).classList.add('char-span');
   }
 
 }
