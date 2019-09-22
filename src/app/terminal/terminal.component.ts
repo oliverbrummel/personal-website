@@ -1,17 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-terminal',
   templateUrl: './terminal.component.html',
-  styleUrls: ['./terminal.component.scss']
+  styleUrls: ['./terminal.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class TerminalComponent implements OnInit {
   currentDateTime = new Date();
   pretendLoaded = false;
   terminalForm: FormGroup;
   userInput: string;
-  displayedOutput: string;
+  displayedOutput = '<span class="char-span">&nbsp;</span>';
 
   constructor() { }
 
@@ -34,6 +35,7 @@ export class TerminalComponent implements OnInit {
         const charHTML = char === ' ' ? '&nbsp;' : char;
         this.displayedOutput += `<span>${charHTML}</span>`;
       });
+      this.displayedOutput += '<span class="char-span">&nbsp;</span>';
     });
   }
 
