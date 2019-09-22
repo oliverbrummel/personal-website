@@ -12,6 +12,7 @@ export class TerminalComponent implements OnInit {
   pretendLoaded = false;
   terminalForm: FormGroup;
   userInput: string;
+  charSpanID: number;
   displayedOutput = '<span class="char-span">&nbsp;</span>';
 
   constructor() { }
@@ -35,12 +36,12 @@ export class TerminalComponent implements OnInit {
   subscribeToInputChanges() {
     this.terminalForm.controls.userInput.valueChanges.subscribe(newValue => {
       this.displayedOutput = '';
-      let id = 1;
+      this.charSpanID = 1;
       const charArray = newValue.split('');
       charArray.forEach(char => {
         const charHTML = char === ' ' ? '&nbsp;' : char;
-        this.displayedOutput += `<span id="${id}">${charHTML}</span>`;
-        id++;
+        this.displayedOutput += `<span id="${this.charSpanID}">${charHTML}</span>`;
+        this.charSpanID++;
       });
       this.displayedOutput += '<span class="char-span">&nbsp;</span>';
     });
