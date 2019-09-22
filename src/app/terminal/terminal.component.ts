@@ -20,19 +20,26 @@ export class TerminalComponent implements OnInit {
 
   ngOnInit() {
     this.currentDateTime = new Date();
-    console.log('this', this);
-
     this.subscribeToInputChanges();
   }
 
   subscribeToInputChanges() {
-    this.hiddenInputEl.valueChanges.subscribe(value => {
-      const lastCharacter = value.slice(-1);
-      this.displayedOutput += lastCharacter;
+    let previousInputValue = '';
+    let previousLastCharacter = null;
+    this.hiddenInputEl.valueChanges.subscribe(newValue => {
 
-      // if (lastCharacter === ' ') {
-      //   console.log('WE GOTTA SPACE!');
-      // }
+      // Typing
+      if (previousInputValue.length < newValue.length) {
+        this.displayedOutput += (newValue.slice(-1) === ' ' ? '&nbsp;' : newValue.slice(-1));
+      }
+      // Deleting
+      if (previousInputValue.length > newValue.length) {
+        this.displayedOutput = (previousLastCharacter === ' '
+          ? this.displayedOutput.substring(0, this.displayedOutput.length - 6)
+          : this.displayedOutput.substring(0, this.displayedOutput.length - 1));
+      }
+      previousInputValue = newValue;
+      previousLastCharacter = newValue.slice(-1);
     });
   }
 
