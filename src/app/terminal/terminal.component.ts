@@ -12,6 +12,7 @@ export class TerminalComponent implements OnInit {
   currentDateTime = new Date();
   userInput: string;
   displayedOutput: string;
+  pretendLoaded = false;
 
   constructor() { }
 
@@ -20,6 +21,10 @@ export class TerminalComponent implements OnInit {
       userInput: new FormControl('')
     });
     this.subscribeToInputChanges();
+
+    setTimeout(() => {
+      this.pretendLoaded = true;
+    }, 300);
   }
 
   subscribeToInputChanges() {

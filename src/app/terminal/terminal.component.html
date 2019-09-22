@@ -3,11 +3,7 @@
     <span>Last login: </span>
     <span>{{ currentDateTime | date: 'medium' }}</span>
   </p>
-  <p>Welcome to the best terminal ever</p>
-
-  <br>
-  <br>
-  <p>
+  <p *ngIf="pretendLoaded">
     <span>oliverbrummel-website:~$&nbsp;</span>
     <span class="user-input--display" [innerHTML]="displayedOutput"></span>
   </p>
