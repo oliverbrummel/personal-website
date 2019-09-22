@@ -7,12 +7,11 @@ import { FormControl, FormGroup } from '@angular/forms';
   styleUrls: ['./terminal.component.scss']
 })
 export class TerminalComponent implements OnInit {
-
-  terminalForm: FormGroup;
   currentDateTime = new Date();
+  pretendLoaded = false;
+  terminalForm: FormGroup;
   userInput: string;
   displayedOutput: string;
-  pretendLoaded = false;
 
   constructor() { }
 
@@ -29,7 +28,12 @@ export class TerminalComponent implements OnInit {
 
   subscribeToInputChanges() {
     this.terminalForm.controls.userInput.valueChanges.subscribe(newValue => {
-      this.displayedOutput = newValue.replace(/\s/g, '&nbsp;');
+      this.displayedOutput = '';
+      const charArray = newValue.split('');
+      charArray.forEach(char => {
+        const charHTML = char === ' ' ? '&nbsp;' : char;
+        this.displayedOutput += `<span>${charHTML}</span>`;
+      });
     });
   }
 
