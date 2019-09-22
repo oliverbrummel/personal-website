@@ -1,4 +1,4 @@
-<section (click)="setFocus()" class="terminal__container">
+<section class="terminal__container">
   <p>
     <span>Last login: </span>
     <span>{{ currentDateTime | date: 'medium' }}</span>
@@ -13,7 +13,10 @@
   </p>
 
   <div id="hiddenInputWrapper">
-    <input #hiddenInput [formControl]="terminalInputControl" autofocus type="text" />
+    <form [formGroup]="terminalForm" (ngSubmit)="processInput()">
+      <input formControlName="userInput" type="text" appForcedFocus/>
+      <button type="submit" [style.display]="'none'">Hidden Submit</button>
+    </form>
   </div>
 
 </section>

@@ -1,5 +1,5 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-terminal',
@@ -8,29 +8,28 @@ import { FormControl } from '@angular/forms';
 })
 export class TerminalComponent implements OnInit {
 
-  @ViewChild('hiddenInput') hiddenInput: ElementRef;
-
-  terminalInputControl = new FormControl('');
-
-  currentDateTime: Date;
+  terminalForm: FormGroup;
+  currentDateTime = new Date();
   userInput: string;
   displayedOutput: string;
 
   constructor() { }
 
   ngOnInit() {
-    this.currentDateTime = new Date();
+    this.terminalForm = new FormGroup({
+      userInput: new FormControl('')
+    });
     this.subscribeToInputChanges();
   }
 
   subscribeToInputChanges() {
-    this.terminalInputControl.valueChanges.subscribe(newValue => {
+    this.terminalForm.controls.userInput.valueChanges.subscribe(newValue => {
       this.displayedOutput = newValue.replace(/\s/g, '&nbsp;');
     });
   }
 
-  setFocus() {
-    this.hiddenInput.nativeElement.focus();
+  processInput() {
+    console.log('SUBMITTED!!');
   }
 
 }
