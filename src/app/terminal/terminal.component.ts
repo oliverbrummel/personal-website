@@ -7,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TerminalComponent implements OnInit {
   currentDateTime: Date;
+  userInput: string;
 
   constructor() { }
 
