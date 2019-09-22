@@ -10,11 +10,11 @@ export class TerminalComponent implements OnInit {
 
   @ViewChild('hiddenInput') hiddenInput: ElementRef;
 
-  hiddenInputEl = new FormControl('');
+  terminalInputControl = new FormControl('');
 
   currentDateTime: Date;
   userInput: string;
-  displayedOutput = '';
+  displayedOutput: string;
 
   constructor() { }
 
@@ -24,22 +24,8 @@ export class TerminalComponent implements OnInit {
   }
 
   subscribeToInputChanges() {
-    let previousInputValue = '';
-    let previousLastCharacter = null;
-    this.hiddenInputEl.valueChanges.subscribe(newValue => {
-
-      // Typing
-      if (previousInputValue.length < newValue.length) {
-        this.displayedOutput += (newValue.slice(-1) === ' ' ? '&nbsp;' : newValue.slice(-1));
-      }
-      // Deleting
-      if (previousInputValue.length > newValue.length) {
-        this.displayedOutput = (previousLastCharacter === ' '
-          ? this.displayedOutput.substring(0, this.displayedOutput.length - 6)
-          : this.displayedOutput.substring(0, this.displayedOutput.length - 1));
-      }
-      previousInputValue = newValue;
-      previousLastCharacter = newValue.slice(-1);
+    this.terminalInputControl.valueChanges.subscribe(newValue => {
+      this.displayedOutput = newValue.replace(/\s/g, '&nbsp;');
     });
   }
 
