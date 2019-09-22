@@ -12,7 +12,7 @@
 
   &::after {
     content: '';
-    position: absolute;
+    // position: absolute; FIX THIS
     top: 0;
     left: 0;
     width: 100vw;
@@ -99,6 +99,11 @@
   }
 }
 
-.user-input__display {
+.user-input--display {
   border-right: .5em solid #fff;
+}
+
+#hiddenInputWrapper {
+  overflow: hidden;
+  width: 0px;
 }

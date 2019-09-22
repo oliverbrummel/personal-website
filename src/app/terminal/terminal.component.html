@@ -1,4 +1,4 @@
-<section class="terminal__container">
+<section (click)="setFocus()" class="terminal__container">
   <p>
     <span>Last login: </span>
     <span>{{ currentDateTime | date: 'medium' }}</span>
@@ -9,6 +9,11 @@
   <br>
   <p>
     <span>oliverbrummel-website:~$</span>&nbsp;
-    <span class="user-input__display">{{ userInput }}</span>
+    <span class="user-input--display" [innerHTML]="displayedOutput"></span>
   </p>
+
+  <div id="hiddenInputWrapper">
+    <input #hiddenInput [formControl]="hiddenInputEl" autofocus type="text" />
+  </div>
+
 </section>
