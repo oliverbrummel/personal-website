@@ -13,13 +13,20 @@ export class TerminalComponent implements OnInit {
   terminalForm: FormGroup;
   userInput: string;
   charSpanID: number;
+  cursorPosition = 0;
   displayedOutput = '<span class="char-span">&nbsp;</span>';
 
   constructor() { }
 
   @HostListener('window:keydown', ['$event'])
-  onKeypress(event: any) {
-    console.log('Keydown event', event);
+  onKeydown(event: any) {
+    if (event.keyCode === 37) { // left arrow key
+      this.moveCursorLeft();
+    } else if ( event.keyCode === 39) { // right arrow key
+      this.moveCursorRight();
+    }
+    console.log('charSpanId', this.charSpanID);
+    console.log('cursorPosition', this.cursorPosition);
   }
 
   ngOnInit() {
@@ -43,8 +50,25 @@ export class TerminalComponent implements OnInit {
         this.displayedOutput += `<span id="${this.charSpanID}">${charHTML}</span>`;
         this.charSpanID++;
       });
-      this.displayedOutput += '<span class="char-span">&nbsp;</span>';
+      this.cursorPosition = this.charSpanID;
+      this.displayedOutput += `<span class="char-span" id="${this.charSpanID}">&nbsp;</span>`;
     });
+  }
+
+  moveCursorLeft() {
+    if (this.cursorPosition > 1) {
+      this.cursorPosition--;
+      document.getElementById(String(this.cursorPosition)).classList.add('char-span');
+      document.getElementById(String(this.cursorPosition + 1)).classList.remove('char-span');
+    }
+  }
+
+  moveCursorRight() {
+    if (this.cursorPosition < this.charSpanID) {
+      this.cursorPosition++;
+      document.getElementById(String(this.cursorPosition)).classList.add('char-span');
+      document.getElementById(String(this.cursorPosition - 1)).classList.remove('char-span');
+    }
   }
 
   processInput() {
