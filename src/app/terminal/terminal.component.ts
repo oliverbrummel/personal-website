@@ -13,7 +13,7 @@ export class TerminalComponent implements OnInit {
   terminalForm: FormGroup;
   userInput: string;
   charSpanID: number;
-  cursorPosition = 0;
+  cursorPosition = 1;
   displayedOutput = '<span class="char-span">&nbsp;</span>';
 
   constructor() { }
@@ -21,12 +21,10 @@ export class TerminalComponent implements OnInit {
   @HostListener('window:keydown', ['$event'])
   onKeydown(event: any) {
     if (event.keyCode === 37) { // left arrow key
-      this.moveCursorLeft();
+      this.onLeftKeydown();
     } else if ( event.keyCode === 39) { // right arrow key
-      this.moveCursorRight();
+      this.onRightKeydown();
     }
-    console.log('charSpanId', this.charSpanID);
-    console.log('cursorPosition', this.cursorPosition);
   }
 
   ngOnInit() {
@@ -41,6 +39,7 @@ export class TerminalComponent implements OnInit {
   }
 
   subscribeToInputChanges() {
+    let oldValue = '';
     this.terminalForm.controls.userInput.valueChanges.subscribe(newValue => {
       this.displayedOutput = '';
       this.charSpanID = 1;
@@ -50,12 +49,21 @@ export class TerminalComponent implements OnInit {
         this.displayedOutput += `<span id="${this.charSpanID}">${charHTML}</span>`;
         this.charSpanID++;
       });
-      this.cursorPosition = this.charSpanID;
-      this.displayedOutput += `<span class="char-span" id="${this.charSpanID}">&nbsp;</span>`;
+      this.displayedOutput += `<span id="${this.charSpanID}">&nbsp;</span>`;
+
+      if (newValue.length < oldValue.length) {
+        this.cursorPosition--;
+      } else {
+        this.cursorPosition++;
+      }
+      setTimeout(() => {
+        document.getElementById(String(this.cursorPosition)).classList.add('char-span');
+      });
+      oldValue = newValue;
     });
   }
 
-  moveCursorLeft() {
+  onLeftKeydown() {
     if (this.cursorPosition > 1) {
       this.cursorPosition--;
       document.getElementById(String(this.cursorPosition)).classList.add('char-span');
@@ -63,7 +71,7 @@ export class TerminalComponent implements OnInit {
     }
   }
 
-  moveCursorRight() {
+  onRightKeydown() {
     if (this.cursorPosition < this.charSpanID) {
       this.cursorPosition++;
       document.getElementById(String(this.cursorPosition)).classList.add('char-span');
@@ -72,8 +80,7 @@ export class TerminalComponent implements OnInit {
   }
 
   processInput() {
-    // test functionality
-    document.getElementById(String(4)).classList.add('char-span');
+    // test submit functionality
   }
 
 }

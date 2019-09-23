@@ -3,8 +3,8 @@
     <span>Last login: </span>
     <span>{{ currentDateTime | date: 'medium' }}</span>
   </p>
-  <p *ngIf="pretendLoaded">
-    <span>oliverbrummel-website:~$&nbsp;</span>
+  <p>
+    <span *ngIf="pretendLoaded">oliverbrummel-website:~$&nbsp;</span>
     <span [innerHTML]="displayedOutput | safe: 'html'"></span>
   </p>
 
